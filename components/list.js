@@ -28,6 +28,7 @@ export default function List(props) {
         opacity: 0.4,
     },
     taskName: {
-        maxWidth: '80%'
+        maxWidth: '80%',
+        fontSize: 16,
     },
   });

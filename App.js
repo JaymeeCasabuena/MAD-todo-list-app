@@ -10,16 +10,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
-  },
-  listWrapper: {
-    paddingTop: 80,
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontStyle: 'bold'
-  },
-  items: {},
-
+    backgroundColor: '#E8EAED'
+  }
 });

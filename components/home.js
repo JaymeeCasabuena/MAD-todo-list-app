@@ -14,6 +14,7 @@ export default function Home () {
             </View>
         </View>
         <TouchableOpacity style={styles.button}>
+            <Text style={styles.plusSign}>+</Text>
             <Text style={styles.buttonText}>Add New Todo</Text>
         </TouchableOpacity>
       </View>
@@ -38,12 +39,20 @@ export default function Home () {
         marginTop: 20,
     },
     button: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         backgroundColor: '#4b5eb6',
         paddingVertical: 15,
         alignItems: 'center',
         margin: 20,
     },
     buttonText: {
-        color: '#FFF'
+        color: '#FFF',
+        fontSize: 20,
+    },
+    plusSign: {
+      color: '#FFF',
+      fontSize: 25,
+      marginRight: 15,
     }
   });
