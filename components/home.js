@@ -1,7 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import List from './list'
 
 export default function Home () {
+  const navigation = useNavigation();
+  const goToAddScreen = () => {
+    navigation.navigate("Add New To Do");
+  }
     return (
       <View style={styles.container}>
         {/*To do list*/}
@@ -13,7 +18,7 @@ export default function Home () {
                 <List text={'Buy Eggs'}/>
             </View>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={goToAddScreen}>
             <Text style={styles.plusSign}>+</Text>
             <Text style={styles.buttonText}>Add New Todo</Text>
         </TouchableOpacity>

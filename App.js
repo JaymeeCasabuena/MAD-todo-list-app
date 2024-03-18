@@ -1,9 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet} from 'react-native';
 import Home from './components/home';
+import AddNew from './components/addNewToDo'
 
+const Stack = createStackNavigator ();
 export default function App() {
   return (
-    <Home/>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Home' component={Home}/>
+        <Stack.Screen name='Add New To Do' component={AddNew}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
