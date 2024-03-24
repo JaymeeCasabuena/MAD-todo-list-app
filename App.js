@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet} from 'react-native';
-import Home from './components/home';
-import AddNew from './components/addNewToDo'
+import Home from './src/screens/home';
+import AddNew from './src/screens/addNewToDo'
 
 const Stack = createStackNavigator ();
 export default function App() {
