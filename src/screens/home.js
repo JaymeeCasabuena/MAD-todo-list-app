@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import List from '../components/List'
+import Button from '../components/SharedButton';
 
 export default function Home () {
   const navigation = useNavigation();
@@ -18,10 +19,9 @@ export default function Home () {
                 <List text={'Buy Eggs'}/>
             </View>
         </View>
-        <TouchableOpacity style={styles.button} onPress={goToAddScreen}>
-            <Text style={styles.plusSign}>+</Text>
-            <Text style={styles.buttonText}>Add New Todo</Text>
-        </TouchableOpacity>
+        <View style={styles.button}>
+          <Button title="Add New To Do" iconName="plus-circle" iconColor='white' buttonStyle={{width: '100%'}} onPress={goToAddScreen}/>
+        </View>
       </View>
     );
   }
@@ -44,20 +44,10 @@ export default function Home () {
         marginTop: 20,
     },
     button: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        backgroundColor: '#4b5eb6',
-        paddingVertical: 15,
-        alignItems: 'center',
-        margin: 20,
-    },
-    buttonText: {
-        color: '#FFF',
-        fontSize: 20,
-    },
-    plusSign: {
-      color: '#FFF',
-      fontSize: 25,
-      marginRight: 15,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      paddingVertical: 15,
+      alignItems: 'center',
+      margin: 20,
     }
   });

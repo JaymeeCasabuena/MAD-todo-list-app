@@ -1,7 +1,8 @@
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../components/SharedButton';
-import { Icon } from 'react-native-vector-icons/FontAwesome';
+
+
 
 export default function AddNew () {
   const navigation = useNavigation();
@@ -22,8 +23,8 @@ export default function AddNew () {
             <TextInput editable multiline maxLength={100} style={styles.descInput} numberOfLines={10} placeholder={'Write the description of the todo item'} placeholderTextColor={'black'} />
         </View>
         <View style={styles.buttons}>
-        <Button title="Cancel" onPress={goBackToHome}/>
-        <Button title="Save" />
+        <Button title="Cancel" iconName="x-circle" iconColor='white' onPress={goBackToHome}/>
+        <Button title="Save" iconName="save" iconColor='white' />
       </View>
       </View>
     );
@@ -68,6 +69,7 @@ export default function AddNew () {
     },
     taskInput: {
         backgroundColor: '#E8EAED',
+        textAlign: 'left',
         width: 360,
         height: 50,
         padding: 10,
@@ -77,6 +79,7 @@ export default function AddNew () {
     },
     descInput: {
         backgroundColor: '#E8EAED',
+        textAlign: 'left',
         width: 360,
         height: 200,
         padding: 10,
@@ -84,9 +87,4 @@ export default function AddNew () {
         borderWidth: 2,
         borderRadius: 5,
     },
-    plusSign: {
-      color: '#FFF',
-      fontSize: 25,
-      marginRight: 15,
-    }
   });
