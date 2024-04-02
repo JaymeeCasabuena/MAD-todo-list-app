@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import List from '../components/list'
+import List from '../components/List'
 
 export default function Home () {
   const navigation = useNavigation();
@@ -30,7 +30,7 @@ export default function Home () {
     container: {
       flex: 1,
       backgroundColor: '#E8EAED',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     listWrapper: {
       paddingTop: 80,
@@ -38,7 +38,7 @@ export default function Home () {
     },
     title: {
       fontSize: 24,
-      fontStyle: 'bold'
+      fontWeight: 'bold'
     },
     items: {
         marginTop: 20,
