@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from '@expo/vector-icons/Feather';
+import { Colors } from "../constants/colors";
 
 
 
@@ -19,14 +19,17 @@ const styles = StyleSheet.create({
     button: { 
       flexDirection: 'row',
       width: '45%',
-      backgroundColor: "#4b5eb6",
+      height: 60,
+      backgroundColor: Colors.DarkBlue,
       padding: 10,
       alignItems: "center",
       justifyContent: "center",
+      borderRadius: 10,
     },
     text: {
       color: 'white',
       fontSize: 20,
+      fontFamily: 'Montserrat-Regular'
     },
     icon: {
       paddingRight: 10,

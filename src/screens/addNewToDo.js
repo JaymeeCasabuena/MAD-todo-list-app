@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../components/SharedButton';
+import { Colors } from '../constants/colors';
 
 
 
@@ -33,7 +34,7 @@ export default function AddNew () {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#E8EAED',
+      backgroundColor: Colors.DirtyWhite,
       alignItems: 'center',
       paddingBottom: 40,
     },
@@ -45,12 +46,14 @@ export default function AddNew () {
     },
     title: {
       fontSize: 24,
-      fontWeight: 'bold',
+      fontFamily: 'Montserrat-Medium',
+      color: Colors.DarkBlue,
     },
     text: {
       fontSize: 16,
-      fontWeight: 'bold',
       paddingBottom: 10,
+      color: Colors.DarkBlue,
+      fontFamily: 'Montserrat-Regular',
     },
     buttons: {
         flexDirection: 'row',
@@ -68,22 +71,22 @@ export default function AddNew () {
         top: 200,
     },
     taskInput: {
-        backgroundColor: '#E8EAED',
+        backgroundColor: Colors.DirtyWhite,
         textAlign: 'left',
         width: 360,
         height: 50,
         padding: 10,
-        borderColor: 'gray',
+        borderColor: Colors.DarkOrange,
         borderWidth: 2,
         borderRadius: 5,
     },
     descInput: {
-        backgroundColor: '#E8EAED',
+        backgroundColor: Colors.DirtyWhite,
         textAlign: 'left',
         width: 360,
         height: 200,
         padding: 10,
-        borderColor: 'gray',
+        borderColor: Colors.DarkOrange,
         borderWidth: 2,
         borderRadius: 5,
     },

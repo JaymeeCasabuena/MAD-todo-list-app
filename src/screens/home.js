@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import List from '../components/List'
 import Button from '../components/SharedButton';
+import { Colors } from "../constants/colors";
+
 
 export default function Home () {
   const navigation = useNavigation();
@@ -20,7 +22,7 @@ export default function Home () {
             </View>
         </View>
         <View style={styles.button}>
-          <Button title="Add New To Do" iconName="plus-circle" iconColor='white' buttonStyle={{width: '100%'}} onPress={goToAddScreen}/>
+          <Button title="Add New To Do" iconName="plus-circle" iconColor='white' buttonStyle={{width: '80%'}} onPress={goToAddScreen}/>
         </View>
       </View>
     );
@@ -29,7 +31,7 @@ export default function Home () {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#E8EAED',
+      backgroundColor: Colors.DirtyWhite,
       justifyContent: 'space-between',
     },
     listWrapper: {
@@ -38,7 +40,9 @@ export default function Home () {
     },
     title: {
       fontSize: 24,
-      fontWeight: 'bold'
+      fontFamily: 'Montserrat-Medium',
+      color: Colors.Blue,
+
     },
     items: {
         marginTop: 20,
