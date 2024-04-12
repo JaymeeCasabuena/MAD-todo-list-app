@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     },
     text: {
       color: 'white',
-      fontSize: 20,
-      fontFamily: 'Montserrat-Regular'
+      fontSize: 24,
+      fontFamily: 'OpenSans-SemiBold'
     },
     icon: {
       paddingRight: 10,
