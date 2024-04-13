@@ -2,14 +2,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet } from "react-native";
 import Home from "./src/screens/Home";
-import AddNew from "./src/screens/AddNewToDo";
+import AddNew from "./src/screens/addNewToDo";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import { Colors } from "./src/constants/colors";
+import { manageState } from "./src/datamodel/stateManagement";
 
 const Stack = createStackNavigator();
 export default function App() {
+  const { taskItems, saveTaskItems} = manageState();
   const [fontsLoaded] = useFonts({
     "Montserrat-Medium": require("./assets/Fonts/Montserrat-Medium.ttf"),
     "Montserrat-Regular": require("./assets/Fonts/Montserrat-Regular.ttf"),
@@ -39,20 +41,30 @@ export default function App() {
       >
         <Stack.Screen
           name="Today's Task"
-          component={Home}
           options={{
             headerTitleAlign: "center",
             headerTintColor: Colors.White,
+            unmountOnBlur: false
           }}
-        />
+        >{(props) => (
+          <Home
+            {...props}
+            taskItems={taskItems}
+          />
+        )}</Stack.Screen>
         <Stack.Screen
           name="Add New Todo"
-          component={AddNew}
           options={{
             headerTitleAlign: "center",
             headerTintColor: Colors.White,
           }}
-        />
+        >{(props) => (
+          <AddNew
+            {...props}
+            taskItems={taskItems}
+            setTaskItems={saveTaskItems}
+          />
+        )}</Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

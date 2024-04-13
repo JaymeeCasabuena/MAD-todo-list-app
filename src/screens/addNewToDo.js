@@ -1,93 +1,122 @@
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Button from '../components/SharedButton';
-import { Colors } from '../constants/colors';
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import Button from "../components/sharedButton";
+import { Colors } from "../constants/Colors";
+import { LinearGradient } from "expo-linear-gradient";
 
-
-
-export default function AddNew () {
+export default function AddNew({ taskItems, setTaskItems }) {
   const navigation = useNavigation();
-  const goBackToHome = () => {
-    navigation.navigate("Home");
-  }
-    return (
-      <View style={styles.container}>
-        <View style={styles.titleWrapper}>
-            <Text style={styles.title}>Add New Todo</Text>
-        </View>
-        <View style={styles.taskName}>
-            <Text style={styles.text}>Title</Text>
-            <TextInput editable multiline maxLength={40} style={styles.taskInput} numberOfLines={2} placeholder={'Write a todo item'} placeholderTextColor={'black'}/>
-        </View>
-        <View style={styles.description}>
-            <Text style={styles.text}>Description</Text>
-            <TextInput editable multiline maxLength={100} style={styles.descInput} numberOfLines={10} placeholder={'Write the description of the todo item'} placeholderTextColor={'black'} />
-        </View>
-        <View style={styles.buttons}>
-        <Button title="Cancel" iconName="x-circle" iconColor='white' onPress={goBackToHome}/>
-        <Button title="Save" iconName="save" iconColor='white' />
-      </View>
-      </View>
-    );
-  }
+  const [task, setTask] = useState("");
+  const [description, setDescription] = useState("");
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: Colors.DirtyWhite,
-      alignItems: 'center',
-      paddingBottom: 40,
-    },
-    titleWrapper: {
-      position: 'absolute',
-      left: 5,
-      paddingTop: 50,
-      paddingHorizontal: 20,
-    },
-    title: {
-      fontSize: 24,
-      fontFamily: 'Montserrat-Medium',
-      color: Colors.DarkBlue,
-    },
-    text: {
-      fontSize: 16,
-      paddingBottom: 10,
-      color: Colors.DarkBlue,
-      fontFamily: 'Montserrat-Regular',
-    },
-    buttons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        position: 'absolute',
-        bottom: 0,
-        paddingBottom: 40,
-    },
-    taskName: {
-        position: 'absolute',
-        top: 100,
-    },
-    description: {
-        position: 'absolute',
-        top: 200,
-    },
-    taskInput: {
-        backgroundColor: Colors.DirtyWhite,
-        textAlign: 'left',
-        width: 360,
-        height: 50,
-        padding: 10,
-        borderColor: Colors.DarkOrange,
-        borderWidth: 2,
-        borderRadius: 5,
-    },
-    descInput: {
-        backgroundColor: Colors.DirtyWhite,
-        textAlign: 'left',
-        width: 360,
-        height: 200,
-        padding: 10,
-        borderColor: Colors.DarkOrange,
-        borderWidth: 2,
-        borderRadius: 5,
-    },
-  });
+  const handleSubmit = () => {
+    if (task !== '' && description !== '') {
+      const maxId = taskItems.reduce((max, item) => max < item.id ? item.id: max, 0)
+      const newToDo = {id:maxId+1, task, description, completed: false}
+      setTaskItems([...taskItems, newToDo]);
+      setTask("");
+      setDescription("");
+      console.log(newToDo)
+    }
+  };
+
+  const goBackToHome = () => {
+    navigation.navigate("Today's Task");
+  };
+
+  return (
+    <LinearGradient
+      style={styles.container}
+      colors={[Colors.Pink, Colors.Coral]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
+      <View style={styles.inputContainer}>
+        <Text style={styles.text}>Title</Text>
+        <TextInput
+          editable
+          multiline
+          maxLength={40}
+          value={task}
+          onChangeText={(text) => setTask(text)}
+          style={styles.taskInput}
+          numberOfLines={2}
+          placeholder={"Write a todo item"}
+          placeholderTextColor={"black"}
+        />
+        <Text style={styles.text}>Description</Text>
+        <TextInput
+          editable
+          multiline
+          maxLength={100}
+          style={styles.descInput}
+          numberOfLines={10}
+          value={description}
+          onChangeText={(text) => setDescription(text)}
+        />
+      </View>
+      <View style={styles.buttons}>
+        <Button
+          title="Cancel"
+          iconName="x-circle"
+          iconColor="white"
+          onPress={goBackToHome}
+        />
+        <Button
+          title="Save"
+          iconName="save"
+          iconColor="white"
+          onPress={() => handleSubmit()}
+        />
+      </View>
+    </LinearGradient>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputContainer: {
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    backgroundColor: Colors.White,
+    width: 350,
+    height: 500,
+    padding: 20,
+    elevation: 15,
+  },
+  text: {
+    fontSize: 24,
+    paddingBottom: 10,
+    fontFamily: "OpenSans-SemiBold",
+  },
+  taskInput: {
+    backgroundColor: Colors.White,
+    textAlign: "left",
+    width: 300,
+    height: 50,
+    padding: 10,
+    borderColor: Colors.Coral,
+    borderWidth: 2,
+  },
+  descInput: {
+    backgroundColor: Colors.White,
+    textAlign: "left",
+    width: 300,
+    height: 200,
+    borderColor: Colors.Coral,
+    borderWidth: 2,
+    padding: 10,
+  },
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    position: "absolute",
+    bottom: 0,
+    paddingBottom: 40,
+  },
+});
