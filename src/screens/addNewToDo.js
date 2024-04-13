@@ -49,7 +49,7 @@ export default function AddNew({ taskItems, setTaskItems }) {
         <TextInput
           editable
           multiline
-          maxLength={100}
+          maxLength={200}
           style={styles.descInput}
           numberOfLines={10}
           value={description}

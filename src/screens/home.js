@@ -6,7 +6,7 @@ import { Colors } from "../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
 import Collapsible from "react-native-collapsible";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6"
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 export default function Home({ taskItems }) {
   const [currentDate, setCurrentDate] = useState("");
@@ -55,7 +55,6 @@ export default function Home({ taskItems }) {
     // Update state with current date
     setCurrentDate(formattedDate);
     setCurrentDay(currentDay);
-    console.log(taskItems);
   }, []);
 
   return (
@@ -75,16 +74,48 @@ export default function Home({ taskItems }) {
           <FlatList
             data={taskItems}
             renderItem={({ item }) => (
-              <View style={collapsed !== item.id ? styles.itemList : [styles.itemList, {backgroundColor: Colors.GrayishWhite}]}>
+              <View
+                style={
+                  collapsed !== item.id
+                    ? styles.itemList
+                    : [styles.itemList, { backgroundColor: Colors.Coral, elevation: 5
+                    }]
+                }
+              >
                 <TouchableOpacity
                   onPress={() => toggleExpand(item.id)}
                   style={styles.taskItem}
                 >
-                  <Text style={styles.taskName}>{item.task}</Text>
-                  <FontAwesome6 style={styles.caretIcon} name="caret-down" size={20} color={Colors.Coral} />
+                  <Text
+                    style={
+                      collapsed !== item.id
+                        ? styles.taskName
+                        : [styles.taskName, { color: Colors.White }]
+                    }
+                  >
+                    {item.task}
+                  </Text>
+                  <FontAwesome6
+                    style={styles.caretIcon}
+                    name="caret-down"
+                    size={20}
+                  />
                 </TouchableOpacity>
-                <Collapsible collapsed={collapsed !== item.id} style={styles.collapsible}>
+                <Collapsible
+                  collapsed={collapsed !== item.id}
+                  style={styles.collapsible}
+                >
                   <Text style={styles.description}>{item.description}</Text>
+                  <View style={styles.taskButtons}>
+                    <Button
+                      iconName="check-circle"
+                      iconColor= {Colors.Green}
+                    />
+                    <Button
+                      iconName="trash"
+                      iconColor= {Colors.Red}
+                    />
+                  </View>
                 </Collapsible>
               </View>
             )}
@@ -136,8 +167,8 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 1,
-    width: "80%",
-    backgroundColor: "#ff5e62",
+    width: "85%",
+    backgroundColor: Colors.Pink,
     alignSelf: "center",
   },
   itemList: {
@@ -145,37 +176,48 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     margin: 10,
     width: 275,
-    borderRadius: 5,
+    borderRadius: 7,
   },
   flatlistContainer: {
     height: 500,
   },
   taskItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   taskName: {
     fontFamily: "OpenSans-Regular",
     fontSize: 22,
-    color: Colors.Coral,
+    color: Colors.Pink,
     width: 230,
   },
   collapsible: {
+    flexDirection: "column",
+    justifyContent: "space-between",
     width: 260,
+    height: 190,
+    marginTop: 5,
+    marginLeft: 5,
+  },
+  scrollView: {
+    flexGrow: 1,
     height: 100,
-    marginTop: 10,
-    backgroundColor: Colors.GrayishWhite,
-
   },
   description: {
-    textAlign: 'left',
+    textAlign: "justify",
     width: 230,
-    padding: 10,
-    fontFamily: 'OpenSans-Regular',
+    fontFamily: "OpenSans-Regular",
     fontSize: 16,
+    color: Colors.White,
+    marginBottom: 8,
+  },
+  taskButtons: {
+    flexDirection: "row",
+    justifyContent: "space-evenly"
   },
   caretIcon: {
     marginRight: 0,
+    color: Colors.Pink,
   },
   button: {
     flexDirection: "row",

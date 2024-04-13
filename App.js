@@ -6,7 +6,7 @@ import AddNew from "./src/screens/addNewToDo";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
-import { Colors } from "./src/constants/colors";
+import { Colors } from "./src/constants/Colors";
 import { manageState } from "./src/datamodel/stateManagement";
 
 const Stack = createStackNavigator();
