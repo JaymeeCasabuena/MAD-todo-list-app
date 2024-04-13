@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import Feather from '@expo/vector-icons/Feather';
-import { Colors } from "../constants/colors";
+import { Colors } from "../constants/Colors";
 
 
 
