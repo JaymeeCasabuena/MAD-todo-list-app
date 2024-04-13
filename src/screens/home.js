@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../components/sharedButton";
 import { Colors } from "../constants/Colors";
+import { Months, Days } from "../constants/Date";
 import { LinearGradient } from "expo-linear-gradient";
 import { FlatList } from "react-native-gesture-handler";
 import Collapsible from "react-native-collapsible";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-export default function Home({ taskItems }) {
+export default function Home({ taskItems, setTaskItems }) {
   const [currentDate, setCurrentDate] = useState("");
   const [currentDay, setCurrentDay] = useState("");
   const [collapsed, setCollapsed] = useState(true);
@@ -24,38 +25,37 @@ export default function Home({ taskItems }) {
   useEffect(() => {
     // Get current date
     const date = new Date();
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
     const formattedDate = `${
-      months[date.getMonth()]
+      Months[date.getMonth()]
     } ${date.getDate()}, ${date.getFullYear()}`;
-    const days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
 
-    const currentDay = days[date.getDay()]; // Get the day of the week
+    // Get the day of the week
+    const currentDay = Days[date.getDay()];
     // Update state with current date
     setCurrentDate(formattedDate);
     setCurrentDay(currentDay);
+    console.log(taskItems);
   }, []);
+
+  const deleteTask = (itemId) => {
+    const objWithIdIndex = taskItems.findIndex(
+      (object) => object.id === itemId
+    );
+    const updatedList = [...taskItems];
+    updatedList.splice(objWithIdIndex, 1);
+    setTaskItems(updatedList);
+  };
+
+  const completeTask = (itemId) => {
+    const objWithIdIndex = taskItems.findIndex(
+      (object) => object.id === itemId
+    );
+    const updatedList = [...taskItems];
+    updatedList[objWithIdIndex].completed = true;
+    setTaskItems(updatedList);
+    console.log(updatedList);
+    console.log(updatedList[objWithIdIndex].completed);
+  };
 
   return (
     <LinearGradient
@@ -72,14 +72,22 @@ export default function Home({ taskItems }) {
         <View style={styles.line} />
         <View style={styles.flatlistContainer}>
           <FlatList
-            data={taskItems}
+            data={taskItems.sort(
+              (a, b) => (a.completed ? 1 : 0) - (b.completed ? 1 : 0)
+            )}
             renderItem={({ item }) => (
               <View
                 style={
                   collapsed !== item.id
                     ? styles.itemList
-                    : [styles.itemList, { backgroundColor: Colors.Coral, elevation: 5
-                    }]
+                    : [
+                        styles.itemList,
+                        {
+                          backgroundColor: Colors.Coral,
+                          elevation: 5,
+                          borderRadius: 10,
+                        },
+                      ]
                 }
               >
                 <TouchableOpacity
@@ -88,9 +96,20 @@ export default function Home({ taskItems }) {
                 >
                   <Text
                     style={
-                      collapsed !== item.id
-                        ? styles.taskName
-                        : [styles.taskName, { color: Colors.White }]
+                      collapsed !== item.id && item.completed
+                        ? [
+                            styles.taskName,
+                            { textDecorationLine: "line-through" },
+                          ]
+                        : collapsed === item.id && item.completed
+                        ? [
+                            styles.taskName,
+                            {
+                              color: Colors.White,
+                              textDecorationLine: "line-through",
+                            },
+                          ]
+                        : styles.taskName
                     }
                   >
                     {item.task}
@@ -107,13 +126,17 @@ export default function Home({ taskItems }) {
                 >
                   <Text style={styles.description}>{item.description}</Text>
                   <View style={styles.taskButtons}>
-                    <Button
-                      iconName="check-circle"
-                      iconColor= {Colors.Green}
-                    />
+                    {item.completed === false ? (
+                      <Button
+                        iconName="check-circle"
+                        iconColor={Colors.Green}
+                        onPress={() => completeTask(item.id)}
+                      />
+                    ) : null}
                     <Button
                       iconName="trash"
-                      iconColor= {Colors.Red}
+                      iconColor={Colors.Red}
+                      onPress={() => deleteTask(item.id)}
                     />
                   </View>
                 </Collapsible>
@@ -176,7 +199,6 @@ const styles = StyleSheet.create({
     marginLeft: 25,
     margin: 10,
     width: 275,
-    borderRadius: 7,
   },
   flatlistContainer: {
     height: 500,
@@ -213,7 +235,7 @@ const styles = StyleSheet.create({
   },
   taskButtons: {
     flexDirection: "row",
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
   },
   caretIcon: {
     marginRight: 0,

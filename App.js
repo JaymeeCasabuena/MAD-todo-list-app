@@ -50,6 +50,7 @@ export default function App() {
           <Home
             {...props}
             taskItems={taskItems}
+            setTaskItems={saveTaskItems}
           />
         )}</Stack.Screen>
         <Stack.Screen
