@@ -1,9 +1,8 @@
 import { loadData, saveData } from "./Data";
 import { useState, useEffect } from "react";
 
-
-export function manageState () {
-    const [taskItems, setTaskItems] = useState([]);
+export function manageState() {
+  const [taskItems, setTaskItems] = useState([]);
 
   useEffect(() => {
     const loadTaskItems = async () => {
@@ -20,5 +19,5 @@ export function manageState () {
     await saveData("taskItems", updatedTaskItems);
   };
 
-  return { taskItems, saveTaskItems}
+  return { taskItems, saveTaskItems };
 }

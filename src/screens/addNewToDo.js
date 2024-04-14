@@ -55,7 +55,7 @@ export default function AddNew({ taskItems, setTaskItems }) {
             onChangeText={(text) => setTask(text)}
             style={styles.taskInput}
             numberOfLines={2}
-            placeholder={"Write a todo item"}
+            placeholder={"Write a task item"}
             placeholderTextColor={"black"}
           />
         </ScrollView>
@@ -72,21 +72,28 @@ export default function AddNew({ taskItems, setTaskItems }) {
             numberOfLines={10}
             value={description}
             onChangeText={(text) => setDescription(text)}
-            onSubmitEditing={(text) => setDescription(text)}
+            placeholder={"Write task's description"}
+            placeholderTextColor={"black"}
           />
         </ScrollView>
       </View>
       <View style={styles.buttons}>
         <Button
           title="Back"
-          iconName="arrow-left-circle"
+          iconName="arrow-left"
           iconColor="white"
+          size={28}
+          hasBackgroundColor={true}
+          addScreen={true}
           onPress={goBackToHome}
         />
         <Button
           title="Save"
-          iconName="save"
+          iconName="check"
           iconColor="white"
+          size={28}
+          hasBackgroundColor={true}
+          addScreen={true}
           onPress={() => handleSubmit()}
         />
         <CustomModal
@@ -103,7 +110,7 @@ export default function AddNew({ taskItems, setTaskItems }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
   },
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
     textAlign: "left",
     width: 300,
-    height: 50,
+    height: 60,
     padding: 10,
     borderColor: Colors.Coral,
     borderWidth: 2,
@@ -135,8 +142,8 @@ const styles = StyleSheet.create({
   descInput: {
     backgroundColor: Colors.White,
     textAlign: "left",
-    textAlignVertical: 'top',
-    writingDirection: 'ltr',
+    textAlignVertical: "top",
+    writingDirection: "ltr",
     width: 300,
     height: 200,
     borderColor: Colors.Coral,
@@ -145,8 +152,8 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: "row",
-    marginLeft: 30,
-    marginTop: 15,
+    marginLeft: 20,
+    marginTop: 90,
     paddingBottom: 10,
   },
 });

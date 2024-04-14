@@ -11,7 +11,7 @@ import { manageState } from "./src/datamodel/stateManagement";
 
 const Stack = createStackNavigator();
 export default function App() {
-  const { taskItems, saveTaskItems} = manageState();
+  const { taskItems, saveTaskItems } = manageState();
   const [fontsLoaded] = useFonts({
     "Poppins-Light": require("./assets/Fonts/Poppins-Light.ttf"),
     "Poppins-Regular": require("./assets/Fonts/Poppins-Regular.ttf"),
@@ -45,31 +45,35 @@ export default function App() {
           name="Today's Task"
           options={{
             headerTitleAlign: "center",
-            headerTitleStyle: {fontFamily: 'Poppins-Regular'},
+            headerTitleStyle: { fontFamily: "Poppins-Regular" },
             headerTintColor: Colors.White,
-            unmountOnBlur: false
+            unmountOnBlur: false,
           }}
-        >{(props) => (
-          <Home
-            {...props}
-            taskItems={taskItems}
-            setTaskItems={saveTaskItems}
-          />
-        )}</Stack.Screen>
+        >
+          {(props) => (
+            <Home
+              {...props}
+              taskItems={taskItems}
+              setTaskItems={saveTaskItems}
+            />
+          )}
+        </Stack.Screen>
         <Stack.Screen
-          name="Add New Todo"
+          name="Add New Task"
           options={{
             headerTitleAlign: "center",
-            headerTitleStyle: {fontFamily: 'Poppins-Regular'},
+            headerTitleStyle: { fontFamily: "Poppins-Regular" },
             headerTintColor: Colors.White,
           }}
-        >{(props) => (
-          <AddNew
-            {...props}
-            taskItems={taskItems}
-            setTaskItems={saveTaskItems}
-          />
-        )}</Stack.Screen>
+        >
+          {(props) => (
+            <AddNew
+              {...props}
+              taskItems={taskItems}
+              setTaskItems={saveTaskItems}
+            />
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

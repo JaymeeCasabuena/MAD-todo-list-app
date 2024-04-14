@@ -5,7 +5,7 @@ import Button from "../components/sharedButton";
 import { Colors } from "../constants/Colors";
 import { Months, Days } from "../constants/Date";
 import { LinearGradient } from "expo-linear-gradient";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, ScrollView } from "react-native-gesture-handler";
 import Collapsible from "react-native-collapsible";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
@@ -16,7 +16,7 @@ export default function Home({ taskItems, setTaskItems }) {
 
   const navigation = useNavigation();
   const goToAddScreen = () => {
-    navigation.navigate("Add New Todo");
+    navigation.navigate("Add New Task");
   };
   const toggleExpand = (itemId) => {
     setCollapsed(itemId === collapsed ? null : itemId);
@@ -34,7 +34,6 @@ export default function Home({ taskItems, setTaskItems }) {
     // Update state with current date
     setCurrentDate(formattedDate);
     setCurrentDay(currentDay);
-    console.log(taskItems);
   }, []);
 
   const deleteTask = (itemId) => {
@@ -53,8 +52,6 @@ export default function Home({ taskItems, setTaskItems }) {
     const updatedList = [...taskItems];
     updatedList[objWithIdIndex].completed = true;
     setTaskItems(updatedList);
-    console.log(updatedList);
-    console.log(updatedList[objWithIdIndex].completed);
   };
 
   return (
@@ -101,13 +98,13 @@ export default function Home({ taskItems, setTaskItems }) {
                             styles.taskName,
                             { textDecorationLine: "line-through" },
                           ]
-                        : collapsed === item.id && !item.completed 
+                        : collapsed === item.id && !item.completed
                         ? [
-                          styles.taskName,
-                          {
-                            color: Colors.White
-                          },
-                        ]
+                            styles.taskName,
+                            {
+                              color: Colors.White,
+                            },
+                          ]
                         : collapsed === item.id && item.completed
                         ? [
                             styles.taskName,
@@ -121,28 +118,48 @@ export default function Home({ taskItems, setTaskItems }) {
                   >
                     {item.task}
                   </Text>
-                  <FontAwesome6
-                    style={styles.caretIcon}
-                    name="caret-down"
-                    size={20}
-                  />
+                  {collapsed !== item.id ? (
+                    <FontAwesome6
+                      style={styles.caretIcon}
+                      name="caret-down"
+                      size={20}
+                    />
+                  ) : (
+                    <FontAwesome6
+                      style={styles.caretIcon}
+                      name="caret-up"
+                      size={20}
+                    />
+                  )}
                 </TouchableOpacity>
                 <Collapsible
                   collapsed={collapsed !== item.id}
                   style={styles.collapsible}
                 >
-                  <Text style={styles.description}>{item.description}</Text>
-                  <View style={styles.taskButtons}>
+                  <ScrollView>
+                    <Text style={styles.description}>{item.description}</Text>
+                  </ScrollView>
+                  <View
+                    style={
+                      !item.completed
+                        ? styles.taskButtons
+                        : [styles.taskButtons, { marginLeft: 60 }]
+                    }
+                  >
                     {item.completed === false ? (
                       <Button
                         iconName="check-circle"
                         iconColor={Colors.Green}
+                        buttonStyle={styles.icons}
+                        size={20}
                         onPress={() => completeTask(item.id)}
                       />
                     ) : null}
                     <Button
                       iconName="trash"
                       iconColor={Colors.Red}
+                      buttonStyle={styles.icons}
+                      size={20}
                       onPress={() => deleteTask(item.id)}
                     />
                   </View>
@@ -155,9 +172,11 @@ export default function Home({ taskItems, setTaskItems }) {
       </View>
       <View style={styles.button}>
         <Button
-          title="Add New Todo"
-          iconName="plus-circle"
+          title="Add New Task"
+          iconName="plus"
           iconColor="white"
+          size={28}
+          hasBackgroundColor={true}
           buttonStyle={{ width: "80%" }}
           onPress={goToAddScreen}
         />
@@ -175,7 +194,7 @@ const styles = StyleSheet.create({
   listWrapper: {
     backgroundColor: Colors.White,
     width: 350,
-    height: 600,
+    height: 620,
     padding: 10,
     elevation: 20,
   },
@@ -206,6 +225,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 25,
     width: 275,
+    // marginBottom: 20,
   },
   flatlistContainer: {
     height: 500,
@@ -223,18 +243,16 @@ const styles = StyleSheet.create({
   collapsible: {
     flexDirection: "column",
     justifyContent: "space-between",
+    alignItems: "flex-start",
     width: 260,
     height: 190,
     marginTop: 5,
     marginLeft: 5,
   },
-  scrollView: {
-    flexGrow: 1,
-    height: 100,
-  },
   description: {
     textAlign: "justify",
     width: 230,
+    height: 130,
     fontFamily: "Poppins-Light",
     fontSize: 13,
     color: Colors.White,
@@ -254,5 +272,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     paddingBottom: 40,
+  },
+  icons: {
+    backgroundColor: "none",
   },
 });
