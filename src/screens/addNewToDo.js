@@ -1,24 +1,33 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
+import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../components/sharedButton";
 import { Colors } from "../constants/Colors";
 import { LinearGradient } from "expo-linear-gradient";
+import CustomModal from "../components/customModal";
 
 export default function AddNew({ taskItems, setTaskItems }) {
   const navigation = useNavigation();
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleSubmit = () => {
-    if (task !== '' && description !== '') {
-      const maxId = taskItems.reduce((max, item) => max < item.id ? item.id: max, 0)
-      const newToDo = {id:maxId+1, task, description, completed: false}
+    if (task !== "" && description !== "") {
+      const maxId = taskItems.reduce(
+        (max, item) => (max < item.id ? item.id : max),
+        0
+      );
+      const newToDo = { id: maxId + 1, task, description, completed: false };
       setTaskItems([...taskItems, newToDo]);
       setTask("");
       setDescription("");
-      console.log(newToDo)
+      setIsModalVisible(true);
     }
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
   };
 
   const goBackToHome = () => {
@@ -34,32 +43,43 @@ export default function AddNew({ taskItems, setTaskItems }) {
     >
       <View style={styles.inputContainer}>
         <Text style={styles.text}>Title</Text>
-        <TextInput
-          editable
-          multiline
-          maxLength={40}
-          value={task}
-          onChangeText={(text) => setTask(text)}
-          style={styles.taskInput}
-          numberOfLines={2}
-          placeholder={"Write a todo item"}
-          placeholderTextColor={"black"}
-        />
+        <ScrollView
+          style={styles.scrollView}
+          keyboardShouldPersistTaps="handled"
+        >
+          <TextInput
+            editable
+            multiline
+            maxLength={40}
+            value={task}
+            onChangeText={(text) => setTask(text)}
+            style={styles.taskInput}
+            numberOfLines={2}
+            placeholder={"Write a todo item"}
+            placeholderTextColor={"black"}
+          />
+        </ScrollView>
         <Text style={styles.text}>Description</Text>
-        <TextInput
-          editable
-          multiline
-          maxLength={200}
-          style={styles.descInput}
-          numberOfLines={10}
-          value={description}
-          onChangeText={(text) => setDescription(text)}
-        />
+        <ScrollView
+          style={styles.scrollView}
+          keyboardShouldPersistTaps="handled"
+        >
+          <TextInput
+            editable
+            multiline
+            maxLength={200}
+            style={styles.descInput}
+            numberOfLines={10}
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            onSubmitEditing={(text) => setDescription(text)}
+          />
+        </ScrollView>
       </View>
       <View style={styles.buttons}>
         <Button
-          title="Cancel"
-          iconName="x-circle"
+          title="Back"
+          iconName="arrow-left-circle"
           iconColor="white"
           onPress={goBackToHome}
         />
@@ -69,6 +89,12 @@ export default function AddNew({ taskItems, setTaskItems }) {
           iconColor="white"
           onPress={() => handleSubmit()}
         />
+        <CustomModal
+          message={"Task added successfully"}
+          buttonName={"OK"}
+          isVisible={isModalVisible}
+          onClose={closeModal}
+        ></CustomModal>
       </View>
     </LinearGradient>
   );
@@ -77,22 +103,25 @@ export default function AddNew({ taskItems, setTaskItems }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    flexDirection: 'column',
+    justifyContent: "space-evenly",
     alignItems: "center",
   },
   inputContainer: {
     flexDirection: "column",
     justifyContent: "space-evenly",
     backgroundColor: Colors.White,
+    marginTop: 120,
     width: 350,
     height: 500,
     padding: 20,
     elevation: 15,
   },
   text: {
-    fontSize: 24,
+    fontSize: 22,
     paddingBottom: 10,
-    fontFamily: "OpenSans-SemiBold",
+    fontFamily: "Poppins-SemiBold",
+    color: Colors.Pink,
   },
   taskInput: {
     backgroundColor: Colors.White,
@@ -106,6 +135,8 @@ const styles = StyleSheet.create({
   descInput: {
     backgroundColor: Colors.White,
     textAlign: "left",
+    textAlignVertical: 'top',
+    writingDirection: 'ltr',
     width: 300,
     height: 200,
     borderColor: Colors.Coral,
@@ -114,9 +145,8 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    position: "absolute",
-    bottom: 0,
-    paddingBottom: 40,
+    marginLeft: 30,
+    marginTop: 15,
+    paddingBottom: 10,
   },
 });

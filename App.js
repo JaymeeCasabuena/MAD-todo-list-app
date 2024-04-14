@@ -13,8 +13,10 @@ const Stack = createStackNavigator();
 export default function App() {
   const { taskItems, saveTaskItems} = manageState();
   const [fontsLoaded] = useFonts({
-    "Montserrat-Medium": require("./assets/Fonts/Montserrat-Medium.ttf"),
-    "Montserrat-Regular": require("./assets/Fonts/Montserrat-Regular.ttf"),
+    "Poppins-Light": require("./assets/Fonts/Poppins-Light.ttf"),
+    "Poppins-Regular": require("./assets/Fonts/Poppins-Regular.ttf"),
+    "Poppins-SemiBold": require("./assets/Fonts/Poppins-SemiBold.ttf"),
+    "Poppins-Bold": require("./assets/Fonts/Poppins-Bold.ttf"),
     "OpenSans-Light": require("./assets/Fonts/OpenSans-Light.ttf"),
     "OpenSans-Regular": require("./assets/Fonts/OpenSans-Regular.ttf"),
     "OpenSans-SemiBold": require("./assets/Fonts/OpenSans-SemiBold.ttf"),
@@ -43,6 +45,7 @@ export default function App() {
           name="Today's Task"
           options={{
             headerTitleAlign: "center",
+            headerTitleStyle: {fontFamily: 'Poppins-Regular'},
             headerTintColor: Colors.White,
             unmountOnBlur: false
           }}
@@ -57,6 +60,7 @@ export default function App() {
           name="Add New Todo"
           options={{
             headerTitleAlign: "center",
+            headerTitleStyle: {fontFamily: 'Poppins-Regular'},
             headerTintColor: Colors.White,
           }}
         >{(props) => (

@@ -101,6 +101,13 @@ export default function Home({ taskItems, setTaskItems }) {
                             styles.taskName,
                             { textDecorationLine: "line-through" },
                           ]
+                        : collapsed === item.id && !item.completed 
+                        ? [
+                          styles.taskName,
+                          {
+                            color: Colors.White
+                          },
+                        ]
                         : collapsed === item.id && item.completed
                         ? [
                             styles.taskName,
@@ -193,11 +200,11 @@ const styles = StyleSheet.create({
     width: "85%",
     backgroundColor: Colors.Pink,
     alignSelf: "center",
+    marginBottom: 10,
   },
   itemList: {
     padding: 10,
     marginLeft: 25,
-    margin: 10,
     width: 275,
   },
   flatlistContainer: {
@@ -208,8 +215,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   taskName: {
-    fontFamily: "OpenSans-Regular",
-    fontSize: 22,
+    fontFamily: "Poppins-Regular",
+    fontSize: 18,
     color: Colors.Pink,
     width: 230,
   },
@@ -228,8 +235,8 @@ const styles = StyleSheet.create({
   description: {
     textAlign: "justify",
     width: 230,
-    fontFamily: "OpenSans-Regular",
-    fontSize: 16,
+    fontFamily: "Poppins-Light",
+    fontSize: 13,
     color: Colors.White,
     marginBottom: 8,
   },
